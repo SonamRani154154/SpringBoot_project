@@ -1,7 +1,9 @@
 package com.ecom.controller;
 
 import com.ecom.model.Category;
+import com.ecom.model.Product;
 import com.ecom.service.CategoryService;
+import com.ecom.service.ProductService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -25,6 +27,9 @@ public class AdminController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private ProductService productService;
 
 
     @GetMapping("/")
@@ -127,4 +132,27 @@ public class AdminController {
         return "redirect:/admin/loadEditCategory/" + category.getId();
     }
 
+    @PostMapping("/saveProduct")
+    public String saveProduct(@ModelAttribute Product product,@RequestParam("file") MultipartFile image, HttpSession session) throws IOException {
+
+        String imageName = image.isEmpty() ? "default.jpg" : image.getOriginalFilename();
+        product.setImage(imageName);
+        Product saveproduct = productService.saveproduct(product);
+         if(!ObjectUtils.isEmpty(saveproduct))
+         {
+
+             File saveFile = new ClassPathResource("static/IMG").getFile();
+
+             Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + "product_img" + File.separator
+                     + image.getOriginalFilename());
+
+              System.out.println(path);
+             Files.copy(image.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+             session.setAttribute("succMsg","product saved Successfully ");
+         }
+          else{
+               session.setAttribute("errorMsg", "Something Went wrong  on server ");
+         }
+        return "redirect:/admin/loadAddProduct";
+    }
 }
