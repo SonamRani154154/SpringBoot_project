@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -32,7 +33,9 @@ public class AdminController {
      }
 
     @GetMapping("/loadAddProduct")
-    public String loadAddProduct(){
+    public String loadAddProduct(Model m){
+        List<Category> categories=categoryService.getAllCategory();
+        m.addAttribute("categories",categories);
         return "admin/add_product";
     }
 
@@ -81,4 +84,47 @@ public class AdminController {
         }
         return "redirect:/admin/category";
     }
+
+    @GetMapping("/loadEditCategory/{id}")
+  public String loadEditCategory(@PathVariable int id, Model m){
+        m.addAttribute("category",categoryService.getCategoryById(id));
+        return "/admin/edit_category";
+  }
+
+    @PostMapping("/updateCategory")
+    public String updateCategory(@ModelAttribute Category category, @RequestParam("file") MultipartFile file,
+                                 HttpSession session) throws IOException {
+
+        Category oldCategory = categoryService.getCategoryById(category.getId());
+        String imageName = file.isEmpty() ? oldCategory.getImageName() : file.getOriginalFilename();
+
+        if (!ObjectUtils.isEmpty(category)) {
+
+            oldCategory.setName(category.getName());
+            oldCategory.setIsActive(category.getIsActive());
+            oldCategory.setImageName(imageName);
+        }
+
+        Category updateCategory = categoryService.saveCategory(oldCategory);
+
+        if (!ObjectUtils.isEmpty(updateCategory)) {
+
+            if (!file.isEmpty()) {
+                File saveFile = new ClassPathResource("static/IMG").getFile();
+
+                Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + "Category" + File.separator
+                        + file.getOriginalFilename());
+
+                // System.out.println(path);
+                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            }
+
+            session.setAttribute("succMsg", "Category update success");
+        } else {
+            session.setAttribute("errorMsg", "something wrong on server");
+        }
+
+        return "redirect:/admin/loadEditCategory/" + category.getId();
+    }
+
 }

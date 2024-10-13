@@ -28,7 +28,7 @@
                                 <label>Category</label>
                                 <select class="form-control">
                                     <option>------select-------</option>
-                                    <option>Electronics</option>
+                                    <option th:each="c:${categories}">[[${c.name}]]</option>
                                 </select>
                             </div>
 
