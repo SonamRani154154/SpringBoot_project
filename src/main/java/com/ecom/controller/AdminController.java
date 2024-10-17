@@ -65,13 +65,16 @@ public class AdminController {
             Category saveCategory = categoryService.saveCategory(category);
            if(ObjectUtils.isEmpty(saveCategory)){
                session.setAttribute("errorMsg"," Not Saved | internal server error");
-           }
+              }
            else{
               File saveFile=  new ClassPathResource("static/IMG").getFile();
               Path path=  Paths.get(saveFile.getAbsolutePath()+File.separator+"Category"+File.separator+file.getOriginalFilename());
+
+              //System.out.println(path);
+              Files.copy(file.getInputStream(),path,StandardCopyOption.REPLACE_EXISTING);
+
                session.setAttribute("succMsg", "Saved successfully");
-               System.out.println(path);
-               Files.copy(file.getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
+
            }
         }
 
@@ -178,8 +181,8 @@ public class AdminController {
 
     @GetMapping("/editProduct/{id}")
     public String editProduct(@PathVariable int id,Model m){
-  m.addAttribute("product",productService.getProductById(id));
-m.addAttribute("categories",categoryService.getAllCategory());
+    m.addAttribute("product",productService.getProductById(id));
+    m.addAttribute("categories",categoryService.getAllCategory());
         return "admin/edit_product";
     }
 
