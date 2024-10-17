@@ -19,23 +19,30 @@
 
                 <div class="col-md-6">
 
-                    <p class="fs-3">laptop</p>
+                    <p class="fs-3">[[${product.title}]]</p>
                     <p>
-                        <span class="fw-bold">Description:</span><br>HP Laptop,256GB SSD
+                        <span class="fw-bold">Description:</span><br>[[${product.description}]]
                     </p>
                     <p>
-                        <span class="fw-bold">product Deatails:</span><br>Status
-                        : <span class="badge bg-success">Available</span>
-                        <span class="badge bg-warning">out of
-                            stock</span><br>Category:Laptop<br>
+                        <span class="fw-bold">product Deatails:</span><br>
+                        Status :
+                        <th:block th:if="${product.stock>0}">
+                            <span class="badge bg-success">Available</span>
+                        </th:block>
+                        <th:block th:unless="${product.stock>0}">
+                            <span class="badge bg-warning">out of stock</span>
+                        </th:block>
+
+
+                        <br>Category:[[${product.category}]]<br>
                         policy :7 days Return & Replacement
                     </p>
 
                     <p class="fs-5 fw-bold">
                         Price :&nbsp; &nbsp; &nbsp; &nbsp;<i class="fas fa-rupee-sign"></i>
-                        70000 <span
-                            class="fs-6 text-decoration-line-through text-secondary">5000</span>
-                        <span class="fs-6  text-success">50%
+                        [[${product.discountPrice}]] <span
+                            class="fs-6 text-decoration-line-through text-secondary">[[${product.price}]]</span>
+                        <span class="fs-6  text-success">[[${product.discount}]]%
 								off</span>
                     </p>
 
@@ -54,9 +61,17 @@
                         </div>
                     </div>
 
-                    <a href="#" class="btn btn-danger col-md-12">Add To
-                        Cart</a>
 
+                    <th:block th:if="${product.stock>0}">
+                        <a href="#" class="btn btn-danger col-md-12">Add To
+                            Cart</a>
+                    </th:block>
+
+
+                    <th:block th:unless="${product.stock>0}">
+                        <a href="" class="btn tect-white  btn-warning col-md-12">
+                           Out of Stock </a>
+                    </th:block>
 
                 </div>
             </div>

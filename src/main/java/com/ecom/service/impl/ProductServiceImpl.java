@@ -88,9 +88,14 @@ dbProduct.setIsActive(product.getIsActive());
     }
 
     @Override
-    public List<Product> getAllActiveProducts() {
+    public List<Product> getAllActiveProducts(String category) {
+        List<Product> products = null;
+        if (ObjectUtils.isEmpty(category)) {
+            products = productRepository.findByIsActiveTrue();
+        } else {
+            products = productRepository.findByCategory(category);
+        }
 
-        List<Product> products = productRepository.findByIsActiveTrue();
         return products;
     }
 
