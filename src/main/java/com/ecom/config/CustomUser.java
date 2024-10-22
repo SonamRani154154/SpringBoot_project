@@ -13,7 +13,7 @@ public class CustomUser  implements UserDetails {
 
     public CustomUser(UserDtls user) {
         super();
-        this.user=user;
+        this.user = user;
     }
 
     @Override

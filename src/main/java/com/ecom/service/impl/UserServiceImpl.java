@@ -14,6 +14,9 @@ private UserRepository userRepository;
 private PasswordEncoder passwordEncoder;
     @Override
     public UserDtls saveUser(UserDtls user) {
+        user.setRole("Role_User");
+        String encodePassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodePassword);
         UserDtls saveUser = userRepository.save(user);
         return saveUser;
     }
