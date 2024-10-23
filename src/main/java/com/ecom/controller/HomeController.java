@@ -27,6 +27,7 @@ import java.util.List;
 public class HomeController {
     @Autowired
     public CategoryService categoryService;
+
     @Autowired
  public ProductService productService;
 
@@ -38,7 +39,7 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/signin")
+    @GetMapping("/login")
     public String login(){
         return "login";
     }
