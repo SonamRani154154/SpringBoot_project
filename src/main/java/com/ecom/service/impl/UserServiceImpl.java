@@ -3,10 +3,12 @@ package com.ecom.service.impl;
 import com.ecom.model.UserDtls;
 import com.ecom.repository.UserRepository;
 import com.ecom.service.UserService;
+import com.ecom.util.AppConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,6 +56,45 @@ private PasswordEncoder passwordEncoder;
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void increaseFailedAttempt(UserDtls user) {
+        int attempt = user.getFailedAttempt() + 1;
+        user.setFailedAttempt(attempt);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void userAccountLock(UserDtls user) {
+user.setAccountNonLocked(false);
+user.setLockTime( new Date());
+userRepository.save(user);
+
+    }
+
+    @Override
+    public boolean unlockAccountTimeExpired(UserDtls user) {
+
+        long lockTime = user.getLockTime().getTime();
+        long unLockTime= lockTime+ AppConstant.UNLOCK_DURATION_TIME;
+
+        long currentTime = System.currentTimeMillis();
+         if(unLockTime<currentTime){
+            user.setAccountNonLocked(true);
+            user.setFailedAttempt(0);
+            user.setLockTime(null);
+            userRepository.save(user);
+            return true;
+         }
+
+
+        return false;
+    }
+
+    @Override
+    public void resetAttempt(int userId) {
+
     }
 
 
