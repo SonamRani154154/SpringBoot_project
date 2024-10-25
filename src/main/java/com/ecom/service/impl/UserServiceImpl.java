@@ -26,6 +26,9 @@ private PasswordEncoder passwordEncoder;
     public UserDtls saveUser(UserDtls user) {
         user.setRole("ROLE_USER");
         user.setIsEnable(true);
+        user.setAccountNonLocked(true);
+        user.setFailedAttempt(0);
+
         String encodePassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodePassword);
         UserDtls saveUser = userRepository.save(user);

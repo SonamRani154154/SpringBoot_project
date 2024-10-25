@@ -6,5 +6,4 @@ public class AppConstant {
 
      public static  final long ATTEMPT_TIME=3;
 
-
 }
