@@ -100,5 +100,12 @@ userRepository.save(user);
 
     }
 
+    @Override
+    public void updateUserResetToken(String email, String resetToken) {
+        UserDtls findByEmail = userRepository.findByEmail(email);
+        findByEmail.setReset_token(resetToken);
+        userRepository.save(findByEmail);
+    }
+
 
 }

@@ -6,6 +6,7 @@ import com.ecom.model.UserDtls;
 import com.ecom.service.CategoryService;
 import com.ecom.service.ProductService;
 import com.ecom.service.UserService;
+import com.ecom.util.CommonUtil;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -23,6 +24,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class HomeController {
@@ -107,5 +109,36 @@ public class HomeController {
 public String showForgotPassword(){
 return "forgot_password.html";
 }
+
+    @PostMapping("/forgot-password")
+    public String processForgotPassword(@RequestParam String email,HttpSession session){
+        UserDtls userByEmail = userService.getUserByEmail(email);
+if(ObjectUtils.isEmpty(userByEmail))
+{
+    session.setAttribute("errorMsg","Invalid Email");
+}
+else {
+    String resetToken = UUID.randomUUID().toString();
+    userService.updateUserResetToken(email,resetToken);
+    //Generate URl: http//localhost
+    Boolean sendMail = CommonUtil.sendMail();
+
+    if(sendMail){
+        session.setAttribute("succMsg","Please Check Your Mail.. Password Resend link sent ");
+    }
+    else {
+        session.setAttribute("errorMsg","Something Went Wrong on Server  | Email not send ");
+
+    }
+}
+        return "redirect:/forgot-password";
+    }
+
+    @GetMapping("/reset-password")
+    public String showResetPassword(){
+        return "reset_password.html";
+    }
+
+
 
 }
