@@ -139,6 +139,4 @@ else {
         return "reset_password.html";
     }
 
-
-//Sonam
 }
