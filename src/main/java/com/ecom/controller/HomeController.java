@@ -127,9 +127,9 @@ else {
     //Generate URl: http//localhost:9094/reset-password?token=sfffcccvfgddsffddasdddf
 
 
-   String url = CommonUtil.generateUrl(request);
+   String url = CommonUtil.generateUrl(request)+"reset-password?token="+resetToken;
 
-    Boolean sendMail = CommonUtil.sendMail();
+    Boolean sendMail = CommonUtil.sendMail(url, email);
 
     if(sendMail){
         session.setAttribute("succMsg","Please Check Your Mail.. Password Resend link sent ");
