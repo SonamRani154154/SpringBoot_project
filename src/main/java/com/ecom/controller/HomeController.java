@@ -7,6 +7,7 @@ import com.ecom.service.CategoryService;
 import com.ecom.service.ProductService;
 import com.ecom.service.UserService;
 import com.ecom.util.CommonUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -36,6 +37,9 @@ public class HomeController {
 
     @Autowired
     private UserService userService;
+
+//    @Autowired
+//    private CommonUtil commonUtil;
 
     @ModelAttribute
      public  void getuserDetails(Principal p, Model m){
@@ -111,7 +115,7 @@ return "forgot_password.html";
 }
 
     @PostMapping("/forgot-password")
-    public String processForgotPassword(@RequestParam String email,HttpSession session){
+    public String processForgotPassword(@RequestParam String email, HttpSession session, HttpServletRequest request){
         UserDtls userByEmail = userService.getUserByEmail(email);
 if(ObjectUtils.isEmpty(userByEmail))
 {
@@ -120,7 +124,11 @@ if(ObjectUtils.isEmpty(userByEmail))
 else {
     String resetToken = UUID.randomUUID().toString();
     userService.updateUserResetToken(email,resetToken);
-    //Generate URl: http//localhost
+    //Generate URl: http//localhost:9094/reset-password?token=sfffcccvfgddsffddasdddf
+
+
+   String url = CommonUtil.generateUrl(request);
+
     Boolean sendMail = CommonUtil.sendMail();
 
     if(sendMail){
