@@ -55,4 +55,11 @@ public class CartServiceImpl implements CartService {
     public List<Cart> getCartsByUser(Integer userId) {
         return List.of();
     }
+
+    @Override
+    public Integer getCountCart(Integer userId) {
+
+        Integer countByUserId = cartRepository.countByUserId(userId);
+        return countByUserId;
+    }
 }
