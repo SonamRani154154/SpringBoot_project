@@ -32,6 +32,6 @@ private  Boolean isEnable;
  private Integer failedAttempt;
  private Date lockTime;
 
- private  String  reset_token;
+ private  String  resetToken;
 
 }
