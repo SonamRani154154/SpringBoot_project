@@ -109,8 +109,13 @@ userRepository.save(user);
 
     @Override
     public UserDtls getUserByToken(String token) {
-      return    userRepository.fingByResetToken(token);
+      return    userRepository.findByResetToken(token);
 
+    }
+
+    @Override
+    public UserDtls updateUser(UserDtls user) {
+         return  userRepository.save(user);
     }
 
 }

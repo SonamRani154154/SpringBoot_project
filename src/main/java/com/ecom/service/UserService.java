@@ -19,4 +19,5 @@ public void increaseFailedAttempt(UserDtls user);
     public  void updateUserResetToken(String email, String resetToken);
 
  public UserDtls getUserByToken(String token);
+  public UserDtls updateUser(UserDtls user);
 }
