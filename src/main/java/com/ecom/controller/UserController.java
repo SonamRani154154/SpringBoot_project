@@ -5,6 +5,7 @@ import com.ecom.model.Category;
 import com.ecom.model.UserDtls;
 import com.ecom.service.CartService;
 import com.ecom.service.CategoryService;
+import com.ecom.service.ProductService;
 import com.ecom.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ public class UserController {
 
 @Autowired
      private CartService cartService;
+@Autowired
+private ProductService productService;
 
      @GetMapping("/")
      public String home(){
@@ -44,9 +47,12 @@ return ("user/home");
                String email = p.getName();
                UserDtls userDtls = userService.getUserByEmail(email);
                m.addAttribute("user",userDtls);
+               Integer countCart = cartService.getCountCart(userDtls.getId());
+               m.addAttribute("countCart", countCart);
           }
           List<Category> allActiveCategory = categoryService.getAllActiveCategory();
           m.addAttribute("categorys",allActiveCategory);
+
      }
 
 @GetMapping("/addCart")
@@ -59,5 +65,20 @@ return ("user/home");
           session.setAttribute("succMsg","product Addded to cart ");
      }
            return "redirect:/product/"+pid;
+     }
+
+     @GetMapping("/cart")
+      public String loadCartPage(Principal p, Model m){
+          UserDtls user= getLoggedInDetails(p);
+          List<Cart> carts = cartService.getCartsByUser(user.getId());
+          m.addAttribute("carts",carts);
+          return"/user/cart";
+      }
+
+     private UserDtls getLoggedInDetails(Principal p) {
+          String email= p.getName();
+          UserDtls userDtls = userService.getUserByEmail(email);
+
+          return userDtls;
      }
 }
