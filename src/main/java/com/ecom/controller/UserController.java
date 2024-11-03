@@ -90,4 +90,8 @@ return ("user/home");
 
           return userDtls;
      }
+@GetMapping("/orders")
+     public String orderPage(){
+         return"/user/order";
+     }
 }
