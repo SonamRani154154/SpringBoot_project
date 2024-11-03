@@ -27,7 +27,8 @@ public class ProductOrder {
       private UserDtls user;
        private String status;
         private String paymentType;
-
+        @OneToOne(cascade = CascadeType.ALL)
+private OrderAddress orderAddress;
 
 
 
