@@ -72,8 +72,17 @@ return ("user/home");
           UserDtls user= getLoggedInDetails(p);
           List<Cart> carts = cartService.getCartsByUser(user.getId());
           m.addAttribute("carts",carts);
+          m.addAttribute("totalOrderPrice",carts);
+          Double totalOrderPrice = carts.get(carts.size() - 1).getTotalOrderPrice();
+          m.addAttribute("totalOrderPrice",totalOrderPrice);
           return"/user/cart";
       }
+
+    @GetMapping("/cartQuantityUpdate")
+       public  String updateCartQuantity(@RequestParam String sy, @RequestParam Integer cid){
+         cartService.updateQuantity(sy,cid);
+         return "redirect:/user/cart";
+       }
 
      private UserDtls getLoggedInDetails(Principal p) {
           String email= p.getName();
