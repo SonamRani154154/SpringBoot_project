@@ -1,8 +1,8 @@
 package com.ecom.service;
 
-import com.ecom.model.ProductOrder;
+import com.ecom.model.OrderRequest;
 
 public interface OrderService  {
 
-    public ProductOrder saveOrder(Integer userid);
+    public void  saveOrder(Integer userid, OrderRequest orderRequest);
 }

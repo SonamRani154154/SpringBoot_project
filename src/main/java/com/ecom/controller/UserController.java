@@ -2,6 +2,7 @@ package com.ecom.controller;
 
 import com.ecom.model.Cart;
 import com.ecom.model.Category;
+import com.ecom.model.OrderRequest;
 import com.ecom.model.UserDtls;
 import com.ecom.service.CartService;
 import com.ecom.service.CategoryService;
@@ -94,4 +95,13 @@ return ("user/home");
      public String orderPage(){
          return"/user/order";
      }
+
+
+    @GetMapping("/save-orders")
+    public String saveOrder(@ModelAttribute OrderRequest request){
+        return"/user/order";
+    }
 }
+
+
+
