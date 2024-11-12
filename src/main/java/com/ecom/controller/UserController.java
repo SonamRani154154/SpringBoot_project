@@ -99,6 +99,8 @@ return ("user/home");
 
     @GetMapping("/save-orders")
     public String saveOrder(@ModelAttribute OrderRequest request){
+
+        System.out.println(request);
         return"/user/order";
     }
 }
