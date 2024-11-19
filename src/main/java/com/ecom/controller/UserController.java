@@ -1,9 +1,6 @@
 package com.ecom.controller;
 
-import com.ecom.model.Cart;
-import com.ecom.model.Category;
-import com.ecom.model.OrderRequest;
-import com.ecom.model.UserDtls;
+import com.ecom.model.*;
 import com.ecom.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,9 +67,11 @@ return ("user/home");
           UserDtls user= getLoggedInDetails(p);
           List<Cart> carts = cartService.getCartsByUser(user.getId());
           m.addAttribute("carts",carts);
-          m.addAttribute("totalOrderPrice",carts);
-          Double totalOrderPrice = carts.get(carts.size() - 1).getTotalOrderPrice();
-          m.addAttribute("totalOrderPrice",totalOrderPrice);
+
+          if(carts.size()>0) {
+              Double totalOrderPrice = carts.get(carts.size() - 1).getTotalOrderPrice();
+              m.addAttribute("totalOrderPrice", totalOrderPrice);
+          }
           return"/user/cart";
       }
 
@@ -89,7 +88,18 @@ return ("user/home");
           return userDtls;
      }
 @GetMapping("/orders")
-     public String orderPage(){
+     public String orderPage(Principal p, Model m){
+    UserDtls user= getLoggedInDetails(p);
+    List<Cart> carts = cartService.getCartsByUser(user.getId());
+    m.addAttribute("carts",carts);
+
+    if(carts.size()>0) {
+        Double orderPrice = carts.get(carts.size() - 1).getTotalOrderPrice();
+        Double totalOrderPrice = carts.get(carts.size() - 1).getTotalOrderPrice()+250+100;
+        m.addAttribute("orderPrice",orderPrice);
+        m.addAttribute("totalOrderPrice", totalOrderPrice);
+    }
+
          return"/user/order";
      }
 
@@ -101,6 +111,19 @@ return ("user/home");
         orderService.saveOrder(user.getId(), request);
         return"/user/success";
     }
+
+    @GetMapping("/success")
+    public String loadSuccess() {
+        return "/user/success";
+    }
+
+//    @GetMapping("/user-orders")
+//    public String myOrder(Model m, Principal p) {
+//        UserDtls loginUser = getLoggedInUserDetails(p);
+//        List<ProductOrder> orders = orderService.getOrdersByUser(loginUser.getId());
+//        m.addAttribute("orders", orders);
+//        return "/user/my_orders";
+//    }
 }
 
 

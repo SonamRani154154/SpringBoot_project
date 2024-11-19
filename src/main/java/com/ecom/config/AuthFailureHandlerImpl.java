@@ -35,7 +35,7 @@ public class AuthFailureHandlerImpl extends SimpleUrlAuthenticationFailureHandle
 
             if (userDtls.getIsEnable()) {
 
-                if (userDtls.getAccountNonLocked()) {
+                if (  userDtls.getAccountNonLocked()) {
 
                     if (userDtls.getFailedAttempt() < AppConstant.ATTEMPT_TIME) {
                         userService.increaseFailedAttempt(userDtls);
