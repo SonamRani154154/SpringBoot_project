@@ -9,7 +9,10 @@
 <section>
     <div class="container-fluid mt-5 p-2">
         <div class="row">
-            <p class="text-center fs-3">My Orders</p>
+            <p class="text-center fs-3">All Orders</p>
+            <hr>
+            <a href="/admin/" class="text-decoration-none"><i
+                    class="fa-solid fa-arrow-left"></i> Back</a>
             <th:block th:if="${session.succMsg}">
                 <p class="text-success fw-bold text-center">[[${session.succMsg}]]</p>
                 <th:block th:text="${@commnServiceImpl.removeSessionMessage()}"></th:block>
@@ -76,14 +79,15 @@
 
                                 <div class="col">
 
-                                    <th:block th:if="${o.status!='Cancelled'|| o.status=='Delivered'}">
+                                    <th:block th:if="${o.status=='Cancelled'|| o.status=='Delivered'}">
                                         <a th:href="@{'/user/update-status?id='+${o.id}+'&st=6' }"
-                                           class="btn btn-sm btn-danger">Cancel</a>
-                                    </th:block> <th:block th:unless="${o.status!='Cancelled'}">
-                                    <a href="#" class="btn btn-sm btn-danger disabled" >Cancel</a>
+                                           class="btn btn-sm btn-primary  col disabled ">update</a>
+                                    </th:block>
+                                    <th:block th:unless="${o.status=='Cancelled'|| o.status=='Delivered'}">
+                                    <button class="btn btn-sm btn-primary  " >update </button>
                                 </th:block>
 
-                                    <button class="btn btn-primary col disabled ">Update </button>
+
                                 </div>
                             </div>
                         </form></td>
