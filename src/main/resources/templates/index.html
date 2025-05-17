@@ -38,64 +38,64 @@
     <div class="container">
         <div class="row">
             <p class="text-center fs-4">Category</p>
-            <div class="col-md-2">
+            <div class="col-md-2" th:each="c:${category}">
                 <div class="card rounded-circle shadow p-3 mb-5 bg-body-tertiary rounded">
                     <div class="card-body text-center">
-                        <img src="IMG/Category/electronic.jpg" width="65%" height="140px">
-                        <p>Electronics </p>
+                        <img th:src="@{'IMG/Category/'+${c.imageName}}" width="65%" height="140px"><br>
+                        <a  th:href="@{'/products?category='+${c.name}}" class="text-decoration-none">[[${c.name}]]</a>
                     </div>
                 </div>
             </div>
 
 
-            <div class="col-md-2">
-                <div class="card rounded-circle shadow p-3 mb-5 bg-body-tertiary rounded">
-                    <div class="card-body text-center">
-                        <img src="IMG/Category/electronic.jpg" width="65%" height="140px">
-                        <p>Beauty </p>
-                    </div>
-                </div>
-            </div>
+<!--            <div class="col-md-2">-->
+<!--                <div class="card rounded-circle shadow p-3 mb-5 bg-body-tertiary rounded">-->
+<!--                    <div class="card-body text-center">-->
+<!--                        <img src="IMG/Category/electronic.jpg" width="65%" height="140px">-->
+<!--                        <p>Beauty </p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
 
-            <div class="col-md-2">
-                <div class="card rounded-circle shadow p-3 mb-5 bg-body-tertiary rounded">
-                    <div class="card-body text-center">
-                        <img src="IMG/Category/electronic.jpg" width="65%" height="140px">
-                        <p>Grocery</p>
-                    </div>
-                </div>
-            </div>
+<!--            <div class="col-md-2">-->
+<!--                <div class="card rounded-circle shadow p-3 mb-5 bg-body-tertiary rounded">-->
+<!--                    <div class="card-body text-center">-->
+<!--                        <img src="IMG/Category/electronic.jpg" width="65%" height="140px">-->
+<!--                        <p>Grocery</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
 
-            <div class="col-md-2">
-                <div class="card rounded-circle shadow p-3 mb-5 bg-body-tertiary rounded">
-                    <div class="card-body text-center">
-                        <img src="IMG/Category/electronic.jpg" width="65%" height="140px">
-                        <p>Clothes</p>
-                    </div>
-                </div>
-            </div>
+<!--            <div class="col-md-2">-->
+<!--                <div class="card rounded-circle shadow p-3 mb-5 bg-body-tertiary rounded">-->
+<!--                    <div class="card-body text-center">-->
+<!--                        <img src="IMG/Category/electronic.jpg" width="65%" height="140px">-->
+<!--                        <p>Clothes</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
 
-            <div class="col-md-2">
-                <div class="card rounded-circle shadow p-3 mb-5 bg-body-tertiary rounded">
-                    <div class="card-body text-center">
-                        <img src="IMG/Category/electronic.jpg" width="65%" height="140px">
-                        <p>Plant</p>
-                    </div>
-                </div>
-            </div>
+<!--            <div class="col-md-2">-->
+<!--                <div class="card rounded-circle shadow p-3 mb-5 bg-body-tertiary rounded">-->
+<!--                    <div class="card-body text-center">-->
+<!--                        <img src="IMG/Category/electronic.jpg" width="65%" height="140px">-->
+<!--                        <p>Plant</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
 
-            <div class="col-md-2">
-                <div class="card rounded-circle shadow p-3 mb-5 bg-body-tertiary rounded">
-                    <div class="card-body text-center">
-                        <img src="IMG/Category/electronic.jpg" width="65%" height="140px">
-                        <p>Books</p>
-                    </div>
-                </div>
-            </div>
+<!--            <div class="col-md-2">-->
+<!--                <div class="card rounded-circle shadow p-3 mb-5 bg-body-tertiary rounded">-->
+<!--                    <div class="card-body text-center">-->
+<!--                        <img src="IMG/Category/electronic.jpg" width="65%" height="140px">-->
+<!--                        <p>Books</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
         </div>
         
@@ -105,44 +105,44 @@
      <!--Start of lastest product -->
     <div class="Container-fluid bg-light p-3">
         <div class="row">
-            <p class="text-center fs-4"> lastest Product </p>
+            <p class="text-center fs-4"> latest Product </p>
 
-            <div class="col-md-3">
+            <div class="col-md-3" th:each="p:${products}">
                 <div class="card  shadow p-3 mb-5 bg-body-tertiary rounded">
                     <div class="card-body text-center">
-                        <img src="IMG/Category/electronic.jpg" width="65%" height="140px">
-                        <p class="text-center">Electronic</p>
+                        <img alt=" " th:src="@{'IMG/Category/'+${p.image}}" class="" width="65%" height="140px">
+                        <p class="text-center"><a  th:href="@{'/product/'+${p.id}}" class="text-decoration-none ">[[${p.title}]]</a>a></p>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <div class="card shadow p-3 mb-5 bg-body-tertiary rounded ">
-                    <div class="card-body text-center">
-                        <img src="IMG/Category/electronic.jpg" width="65%" height="140px">
-                        <p class="text-center">Electronic</p>
-                    </div>
-                </div>
-            </div>
+<!--            <div class="col-md-3">-->
+<!--                <div class="card shadow p-3 mb-5 bg-body-tertiary rounded ">-->
+<!--                    <div class="card-body text-center">-->
+<!--                        <img src="IMG/Category/electronic.jpg" width="65%" height="140px">-->
+<!--                        <p class="text-center">Electronic</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
-            <div class="col-md-3">
-                <div class="card  shadow p-3 mb-5 bg-body-tertiary rounded">
-                    <div class="card-body text-center">
-                        <img src="IMG/Category/electronic.jpg" width="65%" height="140px">
-                        <p class="text-center">Electronic</p>
-                    </div>
-                </div>
-            </div>
+<!--            <div class="col-md-3">-->
+<!--                <div class="card  shadow p-3 mb-5 bg-body-tertiary rounded">-->
+<!--                    <div class="card-body text-center">-->
+<!--                        <img src="IMG/Category/electronic.jpg" width="65%" height="140px">-->
+<!--                        <p class="text-center">Electronic</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
 
-            <div class="col-md-3">
-                <div class="card shadow p-3 mb-5 bg-body-tertiary rounded">
-                    <div class="card-body text-center">
-                        <img src="IMG/Category/electronic.jpg" width="65%" height="140px">
-                        <p class="text-center">Electronic</p>
-                    </div>
-                </div>
-            </div>
+<!--            <div class="col-md-3">-->
+<!--                <div class="card shadow p-3 mb-5 bg-body-tertiary rounded">-->
+<!--                    <div class="card-body text-center">-->
+<!--                        <img src="IMG/Category/electronic.jpg" width="65%" height="140px">-->
+<!--                        <p class="text-center">Electronic</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
 
 

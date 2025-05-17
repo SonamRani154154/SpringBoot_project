@@ -67,7 +67,14 @@ private BCryptPasswordEncoder passwordEncoder;
      }
 
     @GetMapping("/")
-    public String index(){
+    public String index( Model m ){
+
+       List<Category> allActiveCategory = categoryService.getAllActiveCategory().stream()
+               .sorted((c1,c2)->c2.getId().compareTo(c1.getId()))
+               .limit(6).toList();
+        List<Product> allActiveProducts = productService.getAllActiveProducts("").stream().sorted((c1,c2)-> c2.getId()).limit(8).toList();
+m.addAttribute("category" , allActiveCategory);
+m.addAttribute("products", allActiveProducts);
         return "index";
     }
 
